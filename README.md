@@ -52,6 +52,6 @@ View comprehensive sales reports based on Daily, Weekly, Monthly, and Yearly fil
 | **Payment Integration** | Razorpay (Test Mode)                                                     |
 | **External APIs**       | Google Books API, Custom REST APIs                                       |
 | **Development Tools**   | Git, GitHub, Postman, Visual Studio Code                                 |
+| **Payment**             |  Razorpay (Test Mode)                                                    |
 
-Payments: Razorpay (Test Mode)
 
