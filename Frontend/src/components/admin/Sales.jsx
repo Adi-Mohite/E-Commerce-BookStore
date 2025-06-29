@@ -2,6 +2,8 @@ import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthProvider";
 
+const API = import.meta.env.VITE_API_URL;
+
 const Sales = () => {
   const { authUser, token } = useAuth();
   const [salesData, setSalesData] = useState({
@@ -14,14 +16,17 @@ const Sales = () => {
 
   const fetchSales = async (range) => {
     try {
-      const res = await axios.get(`http://localhost:4001/admin/sales?range=${range}`, {
+      const res = await axios.get(`${API}/admin/sales?range=${range}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       return res.data;
     } catch (err) {
-      console.error(`❌ Error fetching ${range} sales:`, err.response?.data || err.message);
+      console.error(
+        `❌ Error fetching ${range} sales:`,
+        err.response?.data || err.message
+      );
       return { totalRevenue: 0, orderCount: 0 };
     }
   };
@@ -58,11 +63,19 @@ const Sales = () => {
   }, [loadSalesData]);
 
   if (!authUser || authUser.role !== "admin") {
-    return <div className="p-4 text-red-500 dark:text-red-400">🚫 Access denied. Admins only.</div>;
+    return (
+      <div className="p-4 text-red-500 dark:text-red-400">
+        🚫 Access denied. Admins only.
+      </div>
+    );
   }
 
   if (loading) {
-    return <div className="p-4 text-gray-800 dark:text-white">Loading sales data...</div>;
+    return (
+      <div className="p-4 text-gray-800 dark:text-white">
+        Loading sales data...
+      </div>
+    );
   }
 
   return (
@@ -100,3 +113,4 @@ const Sales = () => {
 };
 
 export default Sales;
+
