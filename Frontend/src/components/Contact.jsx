@@ -18,7 +18,10 @@ const Contact = () => {
     };
 
     try {
-      await axios.post("http://localhost:4001/api/feedback", payload);
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/feedback`,
+        payload
+      );
       setSuccess("✅ Thank you for your feedback!");
       setMessage("");
     } catch (err) {
@@ -71,3 +74,4 @@ const Contact = () => {
 };
 
 export default Contact;
+
