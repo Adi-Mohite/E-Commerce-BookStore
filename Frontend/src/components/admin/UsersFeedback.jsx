@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+const API = import.meta.env.VITE_API_URL;
+
 const AdminFeedback = () => {
   const [feedbacks, setFeedbacks] = useState([]);
   const token = localStorage.getItem("token");
@@ -10,7 +12,7 @@ const AdminFeedback = () => {
       if (!token) return;
 
       try {
-        const res = await axios.get("http://localhost:4001/api/feedback", {
+        const res = await axios.get(`${API}/api/feedback`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -68,4 +70,5 @@ const AdminFeedback = () => {
 };
 
 export default AdminFeedback;
+
 
