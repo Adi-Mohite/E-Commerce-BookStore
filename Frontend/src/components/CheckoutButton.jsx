@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 const CheckoutButton = ({ amount }) => {
   const { cart, clearCart } = useCart();
-  const {authUser} = useAuth();
+  const { authUser } = useAuth();
 
   const loadRazorpayScript = () => {
     return new Promise((resolve) => {
@@ -36,50 +36,58 @@ const CheckoutButton = ({ amount }) => {
       return;
     }
 
- 
-    const { data } = await axios.post("http://localhost:4001/api/order", {
-      amount,
-      items: cart,
-      userId: authUser._id,
-    });
-
-    const options = {
-      key,
-      amount: data.order.amount,
-      currency: "INR",
-      name: "Book Store",
-      description: "Test Payment",
-      order_id: data.order.id,
-      handler: async function (response) {
-        
-        try {
-          const verifyRes = await axios.post("http://localhost:4001/admin/order/verify-payment", {
-            orderId: data.order.id,
-            paymentId: response.razorpay_payment_id,
-          });
-
-          console.log("✅ Payment verified:", verifyRes.data);
-          toast.success("Payment SuccessFul")
-          clearCart();
-          window.dispatchEvent(new Event("sales-data-updated"));
-
-        } catch (err) {
-          console.error("❌ Payment verification failed:", err);
-          toast.error("Payment Failed")
+    try {
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/order`,
+        {
+          amount,
+          items: cart,
+          userId: authUser._id,
         }
-      },
-      prefill: {
-        name: authUser.name || "Test User",
-        email: authUser.email || "test@example.com",
-        contact: "9999999999",
-      },
-      theme: {
-        color: "#3399cc",
-      },
-    };
+      );
 
-    const rzp = new window.Razorpay(options);
-    rzp.open();
+      const options = {
+        key,
+        amount: data.order.amount,
+        currency: "INR",
+        name: "ReadLab Book Store",
+        description: "Book Purchase Payment",
+        order_id: data.order.id,
+        handler: async function (response) {
+          try {
+            const verifyRes = await axios.post(
+              `${import.meta.env.VITE_API_URL}/admin/order/verify-payment`,
+              {
+                orderId: data.order.id,
+                paymentId: response.razorpay_payment_id,
+              }
+            );
+
+            console.log("✅ Payment verified:", verifyRes.data);
+            toast.success("Payment Successful");
+            clearCart();
+            window.dispatchEvent(new Event("sales-data-updated"));
+          } catch (err) {
+            console.error("❌ Payment verification failed:", err);
+            toast.error("Payment Verification Failed");
+          }
+        },
+        prefill: {
+          name: authUser.fname || "Test User",
+          email: authUser.email || "test@example.com",
+          contact: "9999999999",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error("❌ Payment initiation failed:", error);
+      toast.error("Payment Failed to Start");
+    }
   };
 
   return (
@@ -93,3 +101,4 @@ const CheckoutButton = ({ amount }) => {
 };
 
 export default CheckoutButton;
+
