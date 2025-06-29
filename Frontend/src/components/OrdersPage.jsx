@@ -3,6 +3,8 @@ import axios from "axios";
 import { useAuth } from "./context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
+const API = process.env.REACT_APP_API_URL;
+
 const OrdersPage = () => {
   const { authUser } = useAuth();
   const [orders, setOrders] = useState([]);
@@ -14,9 +16,7 @@ const OrdersPage = () => {
       try {
         if (!authUser?._id) return;
 
-        const res = await axios.get(
-          `http://localhost:4001/api/orders/${authUser._id}`
-        );
+        const res = await axios.get(`${API}/api/orders/${authUser._id}`);
         setOrders(res.data.orders || []);
       } catch (err) {
         console.error(
@@ -64,9 +64,7 @@ const OrdersPage = () => {
       </div>
 
       {orders.length === 0 ? (
-        <p className="text-gray-600 dark:text-gray-300">
-          No orders found.
-        </p>
+        <p className="text-gray-600 dark:text-gray-300">No orders found.</p>
       ) : (
         <div className="space-y-6">
           {orders.map((order) => (
