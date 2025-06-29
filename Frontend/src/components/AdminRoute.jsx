@@ -7,9 +7,14 @@ const AdminRoute = ({ children }) => {
   const location = useLocation();
 
  
-  if (loading) {
-    return <div>Loading...</div>; 
-  }
+ if (loading) {
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <p className="text-lg">Loading...</p>
+    </div>
+  );
+}
+
 
   
   if (!authUser || !authUser._id || authUser.role !== "admin") {
