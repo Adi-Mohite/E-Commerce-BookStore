@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+const API = import.meta.env.VITE_API_URL;
+
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,7 +30,7 @@ const Users = () => {
     }
 
     try {
-      const res = await axios.get("http://localhost:4001/admin/users", {
+      const res = await axios.get(`${API}/admin/users`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -48,7 +50,7 @@ const Users = () => {
   const handlePromoteToAdmin = async (userId) => {
     try {
       await axios.put(
-        `http://localhost:4001/admin/users/${userId}/role`,
+        `${API}/admin/users/${userId}/role`,
         { role: "admin" },
         {
           headers: {
@@ -79,7 +81,7 @@ const Users = () => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
     try {
-      await axios.delete(`http://localhost:4001/admin/users/${userId}`, {
+      await axios.delete(`${API}/admin/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -100,9 +102,7 @@ const Users = () => {
   );
 
   if (loading) {
-    return (
-      <div className="p-4 text-gray-800 dark:text-white">Loading...</div>
-    );
+    return <div className="p-4 text-gray-800 dark:text-white">Loading...</div>;
   }
 
   if (error) {
@@ -116,10 +116,9 @@ const Users = () => {
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">
-         All Users
+        All Users
       </h2>
 
-      
       <div className="mb-4 flex justify-center">
         <input
           type="text"
@@ -133,7 +132,6 @@ const Users = () => {
         />
       </div>
 
-  
       <div className="overflow-x-auto">
         <table className="min-w-full border border-gray-300 dark:border-gray-600">
           <thead>
