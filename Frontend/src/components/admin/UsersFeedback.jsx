@@ -7,6 +7,8 @@ const AdminFeedback = () => {
 
   useEffect(() => {
     const fetchFeedbacks = async () => {
+      if (!token) return;
+
       try {
         const res = await axios.get("http://localhost:4001/api/feedback", {
           headers: {
@@ -15,7 +17,7 @@ const AdminFeedback = () => {
         });
         setFeedbacks(res.data);
       } catch (err) {
-        console.error("❌ Failed to fetch feedbacks");
+        console.error("❌ Failed to fetch feedbacks:", err);
       }
     };
 
@@ -52,7 +54,10 @@ const AdminFeedback = () => {
               </p>
 
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                Submitted: {new Date(fb.submittedAt).toLocaleString()}
+                Submitted:{" "}
+                {fb.submittedAt
+                  ? new Date(fb.submittedAt).toLocaleString()
+                  : "Unknown"}
               </p>
             </div>
           ))}
@@ -63,3 +68,4 @@ const AdminFeedback = () => {
 };
 
 export default AdminFeedback;
+
