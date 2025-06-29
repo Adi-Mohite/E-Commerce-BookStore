@@ -5,9 +5,11 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuth } from "./context/AuthProvider";
 
+const API = process.env.REACT_APP_API_URL;
+
 const Login = () => {
   const navigate = useNavigate();
-  const { setAuthUser} = useAuth(); 
+  const { setAuthUser } = useAuth();
 
   const {
     register,
@@ -17,7 +19,7 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post("http://localhost:4001/user/login", {
+      const res = await axios.post(`${API}/user/login`, {
         email: data.email,
         password: data.password,
       });
@@ -27,17 +29,18 @@ const Login = () => {
         _id: user._id || user.id,
         fname: user.fname,
         email: user.email,
-        role: user.role || "user", 
+        role: user.role || "user",
       };
 
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(fixedUser));
       setAuthUser(fixedUser);
+
       if (fixedUser.role === "admin") {
         navigate("/admin");
       } else {
-        navigate("/"); 
-      } 
+        navigate("/");
+      }
 
       toast.success("Logged In Successfully");
       document.getElementById("my_modal_3")?.close();
@@ -117,3 +120,4 @@ const Login = () => {
 };
 
 export default Login;
+
