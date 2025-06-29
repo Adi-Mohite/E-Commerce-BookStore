@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+const API = import.meta.env.VITE_API_URL;
+
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,7 +23,7 @@ const Orders = () => {
     }
 
     try {
-      const res = await axios.get("http://localhost:4001/admin/orders", {
+      const res = await axios.get(`${API}/admin/orders`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -38,7 +40,7 @@ const Orders = () => {
   const handleStatusUpdate = async (orderId, newStatus) => {
     try {
       await axios.put(
-        `http://localhost:4001/admin/orders/${orderId}/status`,
+        `${API}/admin/orders/${orderId}/status`,
         { status: newStatus },
         {
           headers: {
@@ -62,7 +64,7 @@ const Orders = () => {
       return;
 
     try {
-      await axios.delete(`http://localhost:4001/admin/orders/${orderId}`, {
+      await axios.delete(`${API}/admin/orders/${orderId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -158,3 +160,4 @@ const Orders = () => {
 };
 
 export default Orders;
+
