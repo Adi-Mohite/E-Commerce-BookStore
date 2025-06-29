@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import Login from "./Login";
 
+const API = process.env.REACT_APP_API_URL;
+
 const Signup = () => {
   const navigate = useNavigate();
 
@@ -16,7 +18,7 @@ const Signup = () => {
 
   const onSubmit = async (data) => {
     try {
-      await axios.post("http://localhost:4001/user/signup", {
+      await axios.post(`${API}/user/signup`, {
         fname: data.fname,
         email: data.email,
         password: data.password,
@@ -24,7 +26,6 @@ const Signup = () => {
 
       toast.success("Signup successful. Please log in.");
 
-      
       navigate("/");
       setTimeout(() => {
         document.getElementById("my_modal_3")?.showModal();
@@ -109,10 +110,10 @@ const Signup = () => {
         </div>
       </div>
 
-      
       <Login />
     </>
   );
 };
 
 export default Signup;
+
