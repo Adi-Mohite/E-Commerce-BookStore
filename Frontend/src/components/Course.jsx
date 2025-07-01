@@ -29,7 +29,8 @@ const Course = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=40&key=AIzaSyCQcaVioaspJHRbcUqBbc8Hwf7ih8Qf1-M`;
+      const apiKey = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
+        const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=40&key=${apiKey}`;
 
         const res = await axios.get(url);
 
