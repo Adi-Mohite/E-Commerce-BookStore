@@ -12,8 +12,9 @@ const Freebook = () => {
   useEffect(() => {
     const getFreeDownloadableBooks = async () => {
       try {
+        const apiKey = process.env.VITE_GOOGLE_BOOKS_API_KEY;
         const res = await axios.get(
-          `https://www.googleapis.com/books/v1/volumes?q=free+ebooks&filter=free-ebooks&maxResults=12&key=AIzaSyCQcaVioaspJHRbcUqBbc8Hwf7ih8Qf1-M`
+          `https://www.googleapis.com/books/v1/volumes?q=free+ebooks&filter=free-ebooks&maxResults=12&key=${apiKey}`
         );
 
         const filteredData = res.data.items
