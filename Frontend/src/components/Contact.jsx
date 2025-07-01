@@ -19,7 +19,7 @@ const Contact = () => {
 
     try {
       await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/api/feedback`,
+        `${process.env.REACT_APP_API_URL}/api/feedback`,
         payload
       );
       setSuccess("✅ Thank you for your feedback!");
