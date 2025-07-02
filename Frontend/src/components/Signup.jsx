@@ -6,6 +6,7 @@ import axios from "axios";
 import Login from "./Login";
 
 const API = process.env.REACT_APP_API_URL;
+console.log("API URL: ", process.env.REACT_APP_API_URL);
 
 
 const Signup = () => {
