@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-const API = import.meta.env.REACT_APP_API_URL;
+const API = import.meta.env.VITE_API_URL;
 
 
 const Users = () => {
