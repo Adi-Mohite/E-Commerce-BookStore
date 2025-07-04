@@ -38,7 +38,7 @@ const CheckoutButton = ({ amount }) => {
 
     try {
       const { data } = await axios.post(
-        `${import.meta.env.REACT_APP_API_URL}/api/order`,
+        `${import.meta.env.VITE_API_URL}/api/order`,
         {
           amount,
           items: cart,
@@ -56,7 +56,7 @@ const CheckoutButton = ({ amount }) => {
         handler: async function (response) {
           try {
             const verifyRes = await axios.post(
-              `${import.meta.env.REACT_APP_API_URL}/admin/order/verify-payment`,
+              `${import.meta.env.VITE_API_URL}/admin/order/verify-payment`,
               {
                 orderId: data.order.id,
                 paymentId: response.razorpay_payment_id,
