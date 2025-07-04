@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import Login from "./Login";
 
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.REACT_APP_API_URL;
 console.log("API URL: ", API);
 
 
