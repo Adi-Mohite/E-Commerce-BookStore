@@ -5,7 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuth } from "./context/AuthProvider";
 
-const API = process.env.REACT_APP_API_URL;
+const API = import.meta.env.REACT_APP_API_URL;
 
 
 const Login = () => {
