@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthProvider";
 
-const API = import.meta.env.REACT_APP_API_URL;
+const API = import.meta.env.VITE_API_URL;
 
 const Sales = () => {
   const { authUser, token } = useAuth();
