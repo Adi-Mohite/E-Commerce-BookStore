@@ -45,34 +45,25 @@ function Navbar() {
           </Link>
         </li>
       )}
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
-        <Link to="/course">Course</Link>
-      </li>
-      <li>
-        <Link to="/contact">Contact Us</Link>
-      </li>
-      <li>
-        <Link to="/about">About Us</Link>
-      </li>
+      <li><Link to="/">Home</Link></li>
+      <li><Link to="/course">Course</Link></li>
+      <li><Link to="/contact">Contact Us</Link></li>
+      <li><Link to="/about">About Us</Link></li>
     </>
   );
 
   return (
     <div
-      className={`max-w-screen-2xl container mx-auto md:px-20 px-4 sticky top-0 z-50 
-      transition-all duration-300 ease-in-out 
-      ${scrolled ? "shadow-md bg-base-200 dark:bg-slate-900" : ""}
-      dark:text-white`}
+      className={`w-full px-4 sticky top-0 z-50 transition-all duration-300 ease-in-out 
+        ${scrolled ? "shadow-md bg-base-200 dark:bg-slate-900" : ""}
+        dark:text-white`}
     >
-      <div className="navbar">
-        
-        <div className="navbar-start">
-        
-          <div className="dropdown">
-            <label tabIndex={0} className="btn btn-ghost lg:hidden">
+      <div className="navbar justify-between">
+        {/* Start */}
+        <div className="navbar-start flex items-center gap-3">
+          {/* Hamburger for mobile */}
+          <div className="dropdown lg:hidden">
+            <label tabIndex={0} className="btn btn-ghost">
               <Menu className="h-6 w-6" />
             </label>
             <ul
@@ -83,20 +74,23 @@ function Navbar() {
             </ul>
           </div>
 
-          
-          <Link to="/" className="text-2xl font-bold cursor-pointer dark:text-yellow-300">
+          {/* Logo */}
+          <Link
+            to="/"
+            className="text-2xl font-bold cursor-pointer dark:text-yellow-300 mr-6"
+          >
             ReadLaB
           </Link>
         </div>
 
-       
+        {/* Center - Desktop menu */}
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navItems}</ul>
         </div>
 
-        
-        <div className="navbar-end space-x-3">
-          
+        {/* End */}
+        <div className="navbar-end space-x-3 flex items-center">
+          {/* Search box */}
           <div className="hidden md:block">
             <form
               onSubmit={(e) => {
@@ -117,7 +111,7 @@ function Navbar() {
             </form>
           </div>
 
-          
+          {/* Theme toggle */}
           <button
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
             title="Toggle Dark Mode"
@@ -129,7 +123,7 @@ function Navbar() {
             )}
           </button>
 
-         
+          {/* Cart and Orders */}
           {authUser && (
             <>
               <Link to="/cart" className="relative" title="My Cart">
@@ -145,7 +139,7 @@ function Navbar() {
             </>
           )}
 
-         
+          {/* Auth Buttons */}
           {authUser ? (
             <Logout />
           ) : (
@@ -168,3 +162,4 @@ function Navbar() {
 }
 
 export default Navbar;
+
