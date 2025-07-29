@@ -45,32 +45,23 @@ function Navbar() {
           </Link>
         </li>
       )}
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
-        <Link to="/course">Course</Link>
-      </li>
-      <li>
-        <Link to="/contact">Contact Us</Link>
-      </li>
-      <li>
-        <Link to="/about">About Us</Link>
-      </li>
+      <li><Link to="/">Home</Link></li>
+      <li><Link to="/course">Course</Link></li>
+      <li><Link to="/contact">Contact Us</Link></li>
+      <li><Link to="/about">About Us</Link></li>
     </>
   );
 
   return (
     <div
-      className=`{max-w-screen-2xl container mx-auto md:px-20 px-4 sticky top-0 z-50 
-      transition-all duration-300 ease-in-out 
-      ${scrolled ? "shadow-md bg-base-200 dark:bg-slate-900" : ""}
-      dark:text-white}`
+      className={`max-w-screen-2xl container mx-auto md:px-20 px-4 sticky top-0 z-50 
+        transition-all duration-300 ease-in-out 
+        ${scrolled ? "shadow-md bg-base-200 dark:bg-slate-900" : ""} dark:text-white`}
     >
       <div className="navbar">
-        
+
+        {/* Mobile Menu */}
         <div className="navbar-start">
-        
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
               <Menu className="h-6 w-6" />
@@ -82,27 +73,26 @@ function Navbar() {
               {navItems}
             </ul>
           </div>
-
-          
           <Link to="/" className="text-2xl font-bold cursor-pointer dark:text-yellow-300">
             ReadLaB
           </Link>
         </div>
 
-       
+        {/* Desktop Menu */}
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navItems}</ul>
         </div>
 
-        
+        {/* Right Side */}
         <div className="navbar-end space-x-3">
-          
+
+          {/* Search Bar */}
           <div className="hidden md:block">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 if (query.trim()) {
-                  navigate(/course?search=${query.trim()});
+                  navigate(`/course?search=${query.trim()}`);
                 }
               }}
               className="px-3 py-2 border rounded-md flex items-center gap-2 dark:border-gray-600"
@@ -117,19 +107,15 @@ function Navbar() {
             </form>
           </div>
 
-          
+          {/* Theme Toggle */}
           <button
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
             title="Toggle Dark Mode"
           >
-            {theme === "light" ? (
-              <Moon className="h-6 w-6" />
-            ) : (
-              <Sun className="h-6 w-6" />
-            )}
+            {theme === "light" ? <Moon className="h-6 w-6" /> : <Sun className="h-6 w-6" />}
           </button>
 
-         
+          {/* Authenticated Icons */}
           {authUser && (
             <>
               <Link to="/cart" className="relative" title="My Cart">
@@ -138,23 +124,20 @@ function Navbar() {
                   {cart.length}
                 </span>
               </Link>
-
               <Link to="/orders" title="My Orders">
                 <ClipboardList className="h-7 w-7 hover:scale-110 transition-transform" />
               </Link>
             </>
           )}
 
-         
+          {/* Login / Logout */}
           {authUser ? (
             <Logout />
           ) : (
             <div>
               <button
                 className="bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-800 duration-300"
-                onClick={() =>
-                  document.getElementById("my_modal_3").showModal()
-                }
+                onClick={() => document.getElementById("my_modal_3").showModal()}
               >
                 Login
               </button>
@@ -168,6 +151,7 @@ function Navbar() {
 }
 
 export default Navbar;
+
 
 
 
