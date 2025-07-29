@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -8,9 +7,11 @@ import Cards from "./Cards";
 
 const Freebook = () => {
   const [book, setBook] = useState([]);
+  const [loading, setLoading] = useState(false); // 🔹 loading state
 
   useEffect(() => {
     const getFreeDownloadableBooks = async () => {
+      setLoading(true); // start loading
       try {
         const apiKey = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
         const res = await axios.get(
@@ -22,19 +23,28 @@ const Freebook = () => {
             id: book.id,
             title: book.volumeInfo.title,
             name: book.volumeInfo.authors?.[0] || "Unknown Author",
-            description: book.volumeInfo.description?.substring(0, 100) || "No description available",
-            image: book.volumeInfo.imageLinks?.thumbnail || "https://via.placeholder.com/150",
+            description:
+              book.volumeInfo.description?.substring(0, 100) ||
+              "No description available",
+            image:
+              book.volumeInfo.imageLinks?.thumbnail ||
+              "https://via.placeholder.com/150",
             price: "Free",
             category: book.volumeInfo.categories?.[0] || "General",
             type: "Free",
             isDownloadable: book.accessInfo?.pdf?.isAvailable || false,
-            downloadLink: book.accessInfo?.pdf?.acsTokenLink || book.accessInfo?.pdf?.downloadLink || null,
+            downloadLink:
+              book.accessInfo?.pdf?.acsTokenLink ||
+              book.accessInfo?.pdf?.downloadLink ||
+              null,
           }))
-          .filter((book) => book.isDownloadable && book.downloadLink); 
+          .filter((book) => book.isDownloadable && book.downloadLink);
 
         setBook(filteredData || []);
       } catch (error) {
         console.log("Error fetching free books:", error);
+      } finally {
+        setLoading(false); // stop loading
       }
     };
 
@@ -72,19 +82,23 @@ const Freebook = () => {
         </p>
       </div>
 
-      <div>
-        {book.length > 0 ? (
-          <Slider {...settings}>
-            {book.map((item) => (
-              <Cards item={item} key={item.id} />
-            ))}
-          </Slider>
-        ) : (
-          <p className="text-center text-gray-500">No downloadable books found.</p>
-        )}
-      </div>
+      {/* 🔽 Show spinner while loading */}
+      {loading ? (
+        <div className="flex justify-center items-center min-h-[40vh]">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent"></div>
+        </div>
+      ) : book.length > 0 ? (
+        <Slider {...settings}>
+          {book.map((item) => (
+            <Cards item={item} key={item.id} />
+          ))}
+        </Slider>
+      ) : (
+        <p className="text-center text-gray-500">No downloadable books found.</p>
+      )}
     </div>
   );
 };
 
 export default Freebook;
+
