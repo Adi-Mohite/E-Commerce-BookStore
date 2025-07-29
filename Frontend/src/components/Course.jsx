@@ -5,6 +5,7 @@ import axios from "axios";
 
 const Course = () => {
   const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const randomSubjects = [
@@ -28,12 +29,11 @@ const Course = () => {
 
   useEffect(() => {
     const fetchBooks = async () => {
+      setLoading(true);
       try {
-      const apiKey = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
+        const apiKey = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
         const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=40&key=${apiKey}`;
-
         const res = await axios.get(url);
-
         const formatted = res.data.items?.map((book) => ({
           id: book.id,
           title: book.volumeInfo.title,
@@ -56,10 +56,11 @@ const Course = () => {
             book.accessInfo?.pdf?.downloadLink ||
             null,
         }));
-
         setBooks(formatted || []);
       } catch (error) {
         console.log("Error fetching books:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -70,8 +71,7 @@ const Course = () => {
     <div className="max-w-screen-2xl container mx-auto md:px-20 px-4">
       <div className="pt-30 text-center">
         <h1 className="text-2xl md:text-4xl">
-          We're delighted to have you{" "}
-          <span className="text-blue-500">Here :)</span>
+          We're delighted to have you <span className="text-blue-500">Here :)</span>
         </h1>
         <p className="mt-6 text-gray-600 dark:text-gray-300">
           Discover books by author, title, or keyword. Fast delivery & great
@@ -84,13 +84,20 @@ const Course = () => {
         </Link>
       </div>
 
-      <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {books.map((item) => (
-          <Cards key={item.id} item={item} />
-        ))}
-      </div>
+      {loading ? (
+        <div className="flex justify-center items-center min-h-[50vh]">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent"></div>
+        </div>
+      ) : (
+        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {books.map((item) => (
+            <Cards key={item.id} item={item} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
 
 export default Course;
+
