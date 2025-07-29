@@ -62,10 +62,10 @@ function Navbar() {
 
   return (
     <div
-      className={max-w-screen-2xl container mx-auto md:px-20 px-4 sticky top-0 z-50 
+      className=`{max-w-screen-2xl container mx-auto md:px-20 px-4 sticky top-0 z-50 
       transition-all duration-300 ease-in-out 
       ${scrolled ? "shadow-md bg-base-200 dark:bg-slate-900" : ""}
-      dark:text-white}
+      dark:text-white}`
     >
       <div className="navbar">
         
