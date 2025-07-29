@@ -58,11 +58,12 @@ function Navbar() {
         ${scrolled ? "shadow-md bg-base-200 dark:bg-slate-900" : ""}
         dark:text-white`}
     >
-      <div className="navbar justify-between">
-        {/* Start */}
-        <div className="navbar-start flex items-center gap-3">
-          {/* Hamburger for mobile */}
-          <div className="dropdown lg:hidden">
+      <div className="navbar flex-wrap flex-col sm:flex-row justify-between items-center">
+        
+        {/* START SECTION */}
+        <div className="navbar-start w-full sm:w-auto flex items-center justify-between sm:justify-start">
+          {/* Hamburger Menu for mobile */}
+          <div className="dropdown sm:hidden">
             <label tabIndex={0} className="btn btn-ghost">
               <Menu className="h-6 w-6" />
             </label>
@@ -77,20 +78,20 @@ function Navbar() {
           {/* Logo */}
           <Link
             to="/"
-            className="text-2xl font-bold cursor-pointer dark:text-yellow-300 mr-6"
+            className="text-2xl font-bold cursor-pointer dark:text-yellow-300 ml-2"
           >
             ReadLaB
           </Link>
         </div>
 
-        {/* Center - Desktop menu */}
-        <div className="navbar-center hidden lg:flex">
+        {/* CENTER SECTION - Nav links (desktop only) */}
+        <div className="navbar-center hidden sm:flex">
           <ul className="menu menu-horizontal px-1">{navItems}</ul>
         </div>
 
-        {/* End */}
-        <div className="navbar-end space-x-3 flex items-center">
-          {/* Search box */}
+        {/* END SECTION */}
+        <div className="navbar-end w-full sm:w-auto flex items-center justify-end gap-3 mt-2 sm:mt-0">
+          {/* Search */}
           <div className="hidden md:block">
             <form
               onSubmit={(e) => {
@@ -111,7 +112,7 @@ function Navbar() {
             </form>
           </div>
 
-          {/* Theme toggle */}
+          {/* Theme Toggle */}
           <button
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
             title="Toggle Dark Mode"
@@ -123,7 +124,7 @@ function Navbar() {
             )}
           </button>
 
-          {/* Cart and Orders */}
+          {/* Cart + Orders */}
           {authUser && (
             <>
               <Link to="/cart" className="relative" title="My Cart">
@@ -162,4 +163,5 @@ function Navbar() {
 }
 
 export default Navbar;
+
 
