@@ -1,4 +1,10 @@
 # ReadLaB-BookStore MERN Stack
+
+## 🚀 Live Demo
+
+🔗 [Check it out here](https://readlab.netlify.app/)  
+---
+
 A fully functional E-Commerce Web Application for Books built using the MERN Stack (MongoDB, Express.js, React.js, Node.js).
 
 This platform allows users to browse, search, and purchase books with both free and paid options. It integrates with the Google Books API to fetch a wide collection of books — some free to download and others available for purchase.
